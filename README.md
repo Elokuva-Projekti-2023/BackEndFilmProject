@@ -3,7 +3,7 @@ This repository is created to store user data and to create a personalized profi
 
 This project is valuable as it allows users to securely store their data and create customized profiles for a mobile application, enhancing their overall user experience.
 
-#To begin using this project, users can follow these steps:
+# To begin using this project, users can follow these steps:
 
 1. Clone or download the repository.
    git clone https://github.com/Elokuva-Projekti-2023/BackEndFilmProject.git
@@ -11,5 +11,5 @@ This project is valuable as it allows users to securely store their data and cre
    npm install
 
 
-#Mobile App
+# Mobile App
 Link to the mobile app

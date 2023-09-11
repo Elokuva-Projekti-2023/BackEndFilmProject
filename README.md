@@ -11,10 +11,6 @@ This project is valuable as it allows users to securely store their data and cre
 git clone https://github.com/Elokuva-Projekti-2023/BackEndFilmProject.git
 ```
   
-2. Install any necessary dependencies or prerequisites, as specified in the project documentation.
-```sh
-npm install
-```
 
 
 # Mobile App

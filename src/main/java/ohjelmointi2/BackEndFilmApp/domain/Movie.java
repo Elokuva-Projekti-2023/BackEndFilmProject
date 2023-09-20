@@ -4,6 +4,8 @@ package ohjelmointi2.BackEndFilmApp.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,11 +16,18 @@ import jakarta.persistence.ManyToMany;
 public class Movie {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonProperty("id")
 	private Long movie_id;
+	
+	@JsonProperty("title")
 	private String movie_title;
+	
+	@JsonProperty("overview")
 	private String movie_description;
-	private String movie_genre;
+	
+	@JsonProperty("genre_ids")
+	private String[] movie_genre;
+	
 	
 	@ManyToMany(mappedBy = "movies")
 	private List<MovieList> movieLists = new ArrayList<>();
@@ -43,10 +52,10 @@ public class Movie {
 	public void setMovie_description(String movie_description) {
 		this.movie_description = movie_description;
 	}
-	public String getMovie_genre() {
+	public String[] getMovie_genre() {
 		return movie_genre;
 	}
-	public void setMovie_genre(String movie_genre) {
+	public void setMovie_genre(String[] movie_genre) {
 		this.movie_genre = movie_genre;
 	}
 	

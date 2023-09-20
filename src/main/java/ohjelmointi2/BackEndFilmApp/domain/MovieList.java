@@ -1,23 +1,41 @@
 package ohjelmointi2.BackEndFilmApp.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class MovieList {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long movielist_id;
+	private Long movielist_id;
+	
+	private String movielist_name;
+	
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
-    private List<Movie> movies;
-    private String movielist_name;
+
+    @ManyToMany
+    @JoinTable(
+        name = "movielist_movie",
+        joinColumns = @JoinColumn(name = "movielist_id"),
+        inverseJoinColumns = @JoinColumn(name = "movie_id")
+    )
+    private List<Movie> movies = new ArrayList<>();
     
-    // getters ja setters
+    
+    
+    // getters and setters
     
 	public Long getMovielist_id() {
 		return movielist_id;
@@ -37,11 +55,13 @@ public class MovieList {
 	public void setMovies(List<Movie> movies) {
 		this.movies = movies;
 	}
+	
 	public String getMovielist_name() {
-		return movielist_name;
+	    return movielist_name;
 	}
+
 	public void setMovielist_name(String movielist_name) {
-		this.movielist_name = movielist_name;
+	    this.movielist_name = movielist_name;
 	}
 	
 	// ToString

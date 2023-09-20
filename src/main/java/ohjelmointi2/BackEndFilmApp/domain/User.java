@@ -1,19 +1,33 @@
 package ohjelmointi2.BackEndFilmApp.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
 
 @Entity
+@Table(name = "users")
 public class User {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long user_id;
+	
 	private String user_name;
+	
 	private String user_email;
+	
 	private String user_password;
+	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MovieList> movieLists = new ArrayList<>();
     
     // getters and setters 
     
@@ -40,7 +54,17 @@ public class User {
 	}
 	public void setUser_password(String user_password) {
 		this.user_password = user_password;
+	}	
+	
+	public void setMovieLists(List<MovieList> movieLists) {
+		this.movieLists = movieLists;
 	}
+	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	public List<MovieList> getMovieLists() {
+	    return movieLists;
+	}
+
 	
 	//ToString
 	

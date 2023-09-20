@@ -1,9 +1,14 @@
 package ohjelmointi2.BackEndFilmApp.domain;
 
+
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 
 @Entity
 public class Movie {
@@ -15,6 +20,8 @@ public class Movie {
 	private String movie_description;
 	private String movie_genre;
 	
+	@ManyToMany(mappedBy = "movies")
+	private List<MovieList> movieLists = new ArrayList<>();
 	
 	// getters and setters
 	
@@ -41,6 +48,13 @@ public class Movie {
 	}
 	public void setMovie_genre(String movie_genre) {
 		this.movie_genre = movie_genre;
+	}
+	
+	public List<MovieList> getMovieLists() {
+		return movieLists;
+	}
+	public void setMovieLists(List<MovieList> movieLists) {
+		this.movieLists = movieLists;
 	}
 	
 	// ToString

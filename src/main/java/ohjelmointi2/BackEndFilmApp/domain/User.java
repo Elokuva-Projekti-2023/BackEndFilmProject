@@ -29,7 +29,21 @@ public class User {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MovieList> movieLists = new ArrayList<>();
     
-    // getters and setters 
+	
+    public User() {
+		super();
+	}
+    
+    
+	public User(String user_name, String user_email, String user_password) {
+		super();
+		this.user_name = user_name;
+		this.user_email = user_email;
+		this.user_password = user_password;
+	}
+
+
+	// getters and setters 
     
 	public Long getUser_id() {
 		return user_id;

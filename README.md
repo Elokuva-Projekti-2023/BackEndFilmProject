@@ -50,6 +50,15 @@ The server uses database with the following schema
 | user_email            | VARCHAR(255)    |             |
 | user_password         | VARCHAR(255)    |             |
 
+# API
+
+
+For this project we have decided to use the TMDB API. On our documentation we have provided a brief overview of the TMDB API and focused on one specific endpoints that we've implemented. The TMDB API offers a wide range of functionalities to fetch info about movies, TV-shows, actors and so on. For more detailed information of the TMDB API, refer to [the official TMDB API documentation](https://developers.themoviedb.org/3/getting-started/introduction) 
+
+## Endpoints
+
+* [Now playing movies](EndpointDocs/now-playing.md)
+
 
 # Mobile App
 The Front End side of this app you can find [here](https://github.com/Elokuva-Projekti-2023/MobileFilmProject)

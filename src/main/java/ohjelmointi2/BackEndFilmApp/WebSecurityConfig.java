@@ -45,7 +45,7 @@ public class WebSecurityConfig {
 		          .anyRequest().authenticated()
 		      )
 		      .formLogin()
-		          .defaultSuccessUrl("/", true)
+		          .defaultSuccessUrl("/api/tmdb/now-playing", true)
 		          .permitAll()
 		          .and()
 		      .logout()

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 public class MovieListResponse {
+	
     @JsonProperty("results")
     private List<Movie> results;
 

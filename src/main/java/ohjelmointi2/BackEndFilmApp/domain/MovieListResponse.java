@@ -8,6 +8,8 @@ public class MovieListResponse {
 	
     @JsonProperty("results")
     private List<Movie> results;
+    
+    // getters and setters
 
 	public List<Movie> getResults() {
 		return results;

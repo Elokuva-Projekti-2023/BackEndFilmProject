@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import ohjelmointi2.BackEndFilmApp.domain.GenreListResponse;
+import ohjelmointi2.BackEndFilmApp.domain.Genres;
 import ohjelmointi2.BackEndFilmApp.domain.Movie;
 import ohjelmointi2.BackEndFilmApp.domain.MovieListResponse;
 
@@ -38,6 +40,22 @@ public class TmdbService {
             return response.getBody().getResults();
         } else {
             throw new RuntimeException("Failed to fetch now playing movies from TMDb API.");
+        }
+    }
+    
+    public List<Genres> getGenres() {
+        String genreUrl = "https://api.themoviedb.org/3/genre/movie/list?api_key=" + tmdbApiKey;
+        ResponseEntity<GenreListResponse> genreResponse = restTemplate.exchange(
+            genreUrl,
+            HttpMethod.GET,
+            null,
+            GenreListResponse.class
+        );
+
+        if (genreResponse.getStatusCode() == HttpStatus.OK && genreResponse.getBody() != null) {
+            return genreResponse.getBody().getGenres();
+        } else {
+            throw new RuntimeException("Failed to fetch genres from TMDb API.");
         }
     }
 }

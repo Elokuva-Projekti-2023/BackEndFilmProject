@@ -8,6 +8,8 @@ public class GenreListResponse {
 	
     @JsonProperty("genres")
     private List<Genres> genres;
+    
+    //getters and setters
 
 	public List<Genres> getGenres() {
 		return genres;

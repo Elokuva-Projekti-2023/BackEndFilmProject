@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ohjelmointi2.BackEndFilmApp.domain.Genres;
 import ohjelmointi2.BackEndFilmApp.domain.Movie;
 import ohjelmointi2.BackEndFilmApp.domain.User;
 
@@ -30,6 +31,12 @@ public class UserMovieListController {
         return ResponseEntity.ok(nowPlayingMovies);
     }
 
+    @GetMapping("/genres")
+    public ResponseEntity<List<Genres>> getGenres() {
+        List<Genres> genres = tmdbService.getGenres(); // Create this method in TmdbService
+        return ResponseEntity.ok(genres);
+    }
+    
  /*   @PostMapping("/save-to-watched/{userId}/{movieId}")
     public ResponseEntity<String> saveToWatched(@PathVariable Long userId, @PathVariable Long movieId) {
         // Fetch the user from your database (userService.getUserById(userId))

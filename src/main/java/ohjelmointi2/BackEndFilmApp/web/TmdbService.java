@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import ohjelmointi2.BackEndFilmApp.domain.GenreListResponse;
+import ohjelmointi2.BackEndFilmApp.domain.Genres;
 import ohjelmointi2.BackEndFilmApp.domain.Movie;
 import ohjelmointi2.BackEndFilmApp.domain.MovieListResponse;
 
@@ -25,6 +27,7 @@ public class TmdbService {
         this.restTemplate = restTemplate;
     }
 
+    
     public List<Movie> getNowPlayingMovies() {
         String url = "https://api.themoviedb.org/3/movie/now_playing?api_key=" + tmdbApiKey;
         ResponseEntity<MovieListResponse> response = restTemplate.exchange(
@@ -41,6 +44,24 @@ public class TmdbService {
         }
     }
     
+
+    public List<Genres> getGenres() {
+        String genreUrl = "https://api.themoviedb.org/3/genre/movie/list?api_key=" + tmdbApiKey;
+        ResponseEntity<GenreListResponse> genreResponse = restTemplate.exchange(
+            genreUrl,
+            HttpMethod.GET,
+            null,
+            GenreListResponse.class
+        );
+
+        if (genreResponse.getStatusCode() == HttpStatus.OK && genreResponse.getBody() != null) {
+            return genreResponse.getBody().getGenres();
+        } else {
+            throw new RuntimeException("Failed to fetch genres from TMDb API.");
+        }
+    }
+    
+
     public List<Movie> getPopularMovies() {
         String url = "https://api.themoviedb.org/3/movie/popular?api_key=" + tmdbApiKey;
         ResponseEntity<MovieListResponse> response = restTemplate.exchange(
@@ -56,8 +77,7 @@ public class TmdbService {
             throw new RuntimeException("Failed to fetch popular movies from TMDb API.");
         }
     }
-    
-    public List<Movie> getTopRatedMovies() {
+ List<Movie> getTopRatedMovies() {
         String url = "https://api.themoviedb.org/3/movie/top_rated?api_key=" + tmdbApiKey;
         ResponseEntity<MovieListResponse> response = restTemplate.exchange(
             url,
@@ -72,7 +92,7 @@ public class TmdbService {
             throw new RuntimeException("Failed to fetch top rated movies from TMDb API.");
         }
     }
-    
+
     public List<Movie> getUpcomingMovies() {
         String url = "https://api.themoviedb.org/3/movie/upcoming?api_key=" + tmdbApiKey;
         ResponseEntity<MovieListResponse> response = restTemplate.exchange(
@@ -88,6 +108,5 @@ public class TmdbService {
             throw new RuntimeException("Failed to fetch upcoming movies from TMDb API.");
         }
     }
-    
-    
+
 }

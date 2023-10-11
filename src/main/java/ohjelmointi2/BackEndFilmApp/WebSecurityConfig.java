@@ -23,7 +23,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
+import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 import ohjelmointi2.BackEndFilmApp.web.UserDetailsServiceImpl;
 
 
@@ -41,14 +41,21 @@ public class WebSecurityConfig {
       http
       .cors()
       .and()  
-      .authorizeHttpRequests((authorize) -> authorize
-		          .anyRequest().authenticated()
-		      )
+      .authorizeHttpRequests()
+      .requestMatchers(toH2Console()).permitAll()
+      .anyRequest().authenticated()
+      .and()
+      .csrf().ignoringRequestMatchers(toH2Console())
+      .and()
+      .headers().frameOptions().disable()
+      .and()
 		      .formLogin()
 		          .defaultSuccessUrl("/api/tmdb/now-playing", true)
+		          
 		          .permitAll()
 		          .and()
 		      .logout()
+		      
 		          .permitAll()
 		          .and()
 		      .httpBasic()

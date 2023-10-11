@@ -40,4 +40,54 @@ public class TmdbService {
             throw new RuntimeException("Failed to fetch now playing movies from TMDb API.");
         }
     }
+    
+    public List<Movie> getPopularMovies() {
+        String url = "https://api.themoviedb.org/3/movie/popular?api_key=" + tmdbApiKey;
+        ResponseEntity<MovieListResponse> response = restTemplate.exchange(
+            url,
+            HttpMethod.GET,
+            null,
+            MovieListResponse.class
+        );
+
+        if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
+            return response.getBody().getResults();
+        } else {
+            throw new RuntimeException("Failed to fetch popular movies from TMDb API.");
+        }
+    }
+    
+    public List<Movie> getTopRatedMovies() {
+        String url = "https://api.themoviedb.org/3/movie/top_rated?api_key=" + tmdbApiKey;
+        ResponseEntity<MovieListResponse> response = restTemplate.exchange(
+            url,
+            HttpMethod.GET,
+            null,
+            MovieListResponse.class
+        );
+
+        if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
+            return response.getBody().getResults();
+        } else {
+            throw new RuntimeException("Failed to fetch top rated movies from TMDb API.");
+        }
+    }
+    
+    public List<Movie> getUpcomingMovies() {
+        String url = "https://api.themoviedb.org/3/movie/upcoming?api_key=" + tmdbApiKey;
+        ResponseEntity<MovieListResponse> response = restTemplate.exchange(
+            url,
+            HttpMethod.GET,
+            null,
+            MovieListResponse.class
+        );
+
+        if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
+            return response.getBody().getResults();
+        } else {
+            throw new RuntimeException("Failed to fetch upcoming movies from TMDb API.");
+        }
+    }
+    
+    
 }

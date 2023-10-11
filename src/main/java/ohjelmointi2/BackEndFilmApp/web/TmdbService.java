@@ -45,6 +45,7 @@ public class TmdbService {
         }
     }
     
+
     public List<Genres> getGenres() {
         String genreUrl = "https://api.themoviedb.org/3/genre/movie/list?api_key=" + tmdbApiKey;
         ResponseEntity<GenreListResponse> genreResponse = restTemplate.exchange(
@@ -61,6 +62,7 @@ public class TmdbService {
         }
     }
     
+
     public List<Movie> getPopularMovies() {
         String url = "https://api.themoviedb.org/3/movie/popular?api_key=" + tmdbApiKey;
         ResponseEntity<MovieListResponse> response = restTemplate.exchange(
@@ -76,9 +78,7 @@ public class TmdbService {
             throw new RuntimeException("Failed to fetch popular movies from TMDb API.");
         }
     }
-
-
-    public List<Movie> getTopRatedMovies() {
+ List<Movie> getTopRatedMovies() {
         String url = "https://api.themoviedb.org/3/movie/top_rated?api_key=" + tmdbApiKey;
         ResponseEntity<MovieListResponse> response = restTemplate.exchange(
             url,
@@ -93,8 +93,6 @@ public class TmdbService {
             throw new RuntimeException("Failed to fetch top rated movies from TMDb API.");
         }
     }
-
-    
 
     public List<Movie> getUpcomingMovies() {
         String url = "https://api.themoviedb.org/3/movie/upcoming?api_key=" + tmdbApiKey;
@@ -127,4 +125,5 @@ public class TmdbService {
             throw new RuntimeException("Failed to fetch movie details from TMDb API for movie ID: " + movieId);
         }
     }
+
 }

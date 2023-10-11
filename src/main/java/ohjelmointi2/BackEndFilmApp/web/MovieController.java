@@ -30,6 +30,8 @@ public class MovieController {
         List<Movie> nowPlayingMovies = tmdbService.getNowPlayingMovies();
         return ResponseEntity.ok(nowPlayingMovies);
     }
+    
+    
 
     @GetMapping("/genres")
     public ResponseEntity<List<Genres>> getGenres() {

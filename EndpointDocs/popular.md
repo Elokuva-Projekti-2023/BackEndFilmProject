@@ -1,12 +1,12 @@
-# Fetching now playing movies
+# Fetching popular movies
 
-**URL:** `/now-playing`
+**URL:** `/popular`
 
 **Method:** `GET`
 
 ## *Successful response*
 
-Content example (first three now playing movies):
+Content example (first three popular movies):
 
 ```json
 [

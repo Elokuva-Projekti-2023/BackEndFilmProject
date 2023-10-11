@@ -58,6 +58,10 @@ For this project we have decided to use the TMDB API. On our documentation we ha
 ## Endpoints
 
 * [Now playing movies](EndpointDocs/now-playing.md)
+* [Movie genres](EndpointDocs/genres.md)
+* [Popular movies](EndpointDocs/popular.md)
+* [Upcoming movies](EndpointDocs/upcoming.md)
+* [Top rated movies](EndpointDocs/toprated.md)
 
 
 # Mobile App

@@ -1,12 +1,12 @@
-# Fetching now playing movies
+# Fetching upcoming movies
 
-**URL:** `/now-playing`
+**URL:** `/upcoming`
 
 **Method:** `GET`
 
 ## *Successful response*
 
-Content example (first three now playing movies):
+Content example (first three upcoming movies):
 
 ```json
 [
@@ -23,13 +23,12 @@ Content example (first three now playing movies):
     },
     {
         "movieLists": [],
-        "id": 926393,
-        "title": "The Equalizer 3",
-        "overview": "Robert McCall finds himself at home in Southern Italy but he discovers his friends are under the control of local crime bosses. As events turn deadly, McCall knows what he has to do: become his friends' protector by taking on the mafia.",
+        "id": 1008042,
+        "title": "Talk to Me",
+        "overview": "When a group of friends discover how to conjure spirits using an embalmed hand, they become hooked on the new thrill, until one of them goes too far and unleashes terrifying supernatural forces.",
         "genre_ids": [
-            "28",
-            "53",
-            "80"
+            "27",
+            "53"
         ]
     },
     {

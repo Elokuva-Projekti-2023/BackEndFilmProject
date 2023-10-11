@@ -16,7 +16,7 @@ import ohjelmointi2.BackEndFilmApp.domain.User;
 
 @RestController
 @RequestMapping("/api/tmdb")
-public class UserMovieListController {
+public class MovieController {
 
 	@Autowired
     private TmdbService tmdbService;
@@ -56,8 +56,9 @@ public class UserMovieListController {
     List<Movie> upcomingMovies = tmdbService.getUpcomingMovies();
     return ResponseEntity.ok(upcomingMovies);
     }
-    
- /*   @PostMapping("/save-to-watched/{userId}/{movieId}")
+  
+    /*
+   @PostMapping("/save-to-watched/{userId}/{movieId}")
     public ResponseEntity<String> saveToWatched(@PathVariable Long userId, @PathVariable Long movieId) {
         // Fetch the user from your database (userService.getUserById(userId))
         User user = userService.getUserById(userId);
@@ -67,6 +68,7 @@ public class UserMovieListController {
 
         return ResponseEntity.ok("Movie saved to Watched List.");
     }
+   
 
     @PostMapping("/save-to-to-watch/{userId}/{movieId}")
     public ResponseEntity<String> saveToToWatch(@PathVariable Long userId, @PathVariable Long movieId) {

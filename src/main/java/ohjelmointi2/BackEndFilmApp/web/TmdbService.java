@@ -12,6 +12,7 @@ import org.springframework.web.client.RestTemplate;
 import ohjelmointi2.BackEndFilmApp.domain.GenreListResponse;
 import ohjelmointi2.BackEndFilmApp.domain.Genres;
 import ohjelmointi2.BackEndFilmApp.domain.Movie;
+import ohjelmointi2.BackEndFilmApp.domain.MovieDetailResponse;
 import ohjelmointi2.BackEndFilmApp.domain.MovieListResponse;
 
 @Service
@@ -108,6 +109,22 @@ public class TmdbService {
             return response.getBody().getResults();
         } else {
             throw new RuntimeException("Failed to fetch upcoming movies from TMDb API.");
+        }
+    }
+    
+    public MovieDetailResponse getMovieDetails(Long movieId) {
+        String url = "https://api.themoviedb.org/3/movie/" + movieId + "?api_key=" + tmdbApiKey;
+        ResponseEntity<MovieDetailResponse> response = restTemplate.exchange(
+            url,
+            HttpMethod.GET,
+            null,
+            MovieDetailResponse.class
+        );
+
+        if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
+            return response.getBody();
+        } else {
+            throw new RuntimeException("Failed to fetch movie details from TMDb API for movie ID: " + movieId);
         }
     }
 }

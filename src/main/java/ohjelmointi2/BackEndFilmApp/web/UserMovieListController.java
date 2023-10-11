@@ -37,6 +37,26 @@ public class UserMovieListController {
         return ResponseEntity.ok(genres);
     }
     
+    @GetMapping("/popular")
+    public ResponseEntity<List<Movie>> getPopularMovies() {
+    List<Movie> popularMovies = tmdbService.getPopularMovies();
+    return ResponseEntity.ok(popularMovies);
+    }
+
+    
+    @GetMapping("/toprated")
+    public ResponseEntity<List<Movie>> getTopRatedMovies() {
+    List<Movie> topRatedMovies = tmdbService.getTopRatedMovies();
+    return ResponseEntity.ok(topRatedMovies);
+    }
+
+    
+    @GetMapping("/upcoming")
+    public ResponseEntity<List<Movie>> getUpcomingMovies() {
+    List<Movie> upcomingMovies = tmdbService.getUpcomingMovies();
+    return ResponseEntity.ok(upcomingMovies);
+    }
+    
  /*   @PostMapping("/save-to-watched/{userId}/{movieId}")
     public ResponseEntity<String> saveToWatched(@PathVariable Long userId, @PathVariable Long movieId) {
         // Fetch the user from your database (userService.getUserById(userId))

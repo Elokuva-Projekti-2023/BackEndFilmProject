@@ -45,7 +45,16 @@ public class MovieListService {
             movie.setMovie_id(movieDetail.getId());
             movie.setMovie_title(movieDetail.getTitle());
             movie.setMovie_description(movieDetail.getOverview());
+            movie.setOriginal_title(movieDetail.getOriginal_title());
+            movie.setPoster_path(movieDetail.getPoster_path());
+            movie.setRelease_date(movieDetail.getRelease_date());
+            movie.setVote_average(movieDetail.getVote_average());
+            movie.setVote_count(movieDetail.getVote_count());
+            
+            // Tänne lisätään if else!!
+            
             movieRepository.save(movie);
+            
             // Set other relevant fields as needed
 
             // Ensure the movie list's "movies" field is initialized

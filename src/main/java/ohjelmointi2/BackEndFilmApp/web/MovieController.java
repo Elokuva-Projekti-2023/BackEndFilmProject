@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ohjelmointi2.BackEndFilmApp.domain.Genres;
@@ -57,6 +58,12 @@ public class MovieController {
     public ResponseEntity<List<Movie>> getUpcomingMovies() {
     List<Movie> upcomingMovies = tmdbService.getUpcomingMovies();
     return ResponseEntity.ok(upcomingMovies);
+    }
+    
+    @GetMapping("/search/movie")
+    public ResponseEntity<List<Movie>> searchMovies(@RequestParam String searchTerm) {
+        List<Movie> searchResults = tmdbService.searchMovies(searchTerm); // Implement this method in TmdbService
+        return ResponseEntity.ok(searchResults);
     }
   
     /*

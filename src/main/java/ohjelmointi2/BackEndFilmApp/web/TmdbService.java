@@ -1,5 +1,6 @@
 package ohjelmointi2.BackEndFilmApp.web;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +15,7 @@ import ohjelmointi2.BackEndFilmApp.domain.Genres;
 import ohjelmointi2.BackEndFilmApp.domain.Movie;
 import ohjelmointi2.BackEndFilmApp.domain.MovieDetailResponse;
 import ohjelmointi2.BackEndFilmApp.domain.MovieListResponse;
+import ohjelmointi2.BackEndFilmApp.domain.MovieSearchResult;
 
 @Service
 public class TmdbService {
@@ -125,5 +127,24 @@ public class TmdbService {
             throw new RuntimeException("Failed to fetch movie details from TMDb API for movie ID: " + movieId);
         }
     }
+    
+    public List<Movie> searchMovies(String searchTerm) {
+        
+    	String url = "https://api.themoviedb.org/3/search/movie?query=" + searchTerm + "&api_key=" + tmdbApiKey;
 
-}
+    	ResponseEntity<MovieSearchResult> response = restTemplate.getForEntity(url, MovieSearchResult.class);
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            MovieSearchResult searchResult = response.getBody();
+            if (searchResult != null) {
+                return searchResult.getResults();
+            }
+        }
+
+        // Handle errors or return an empty list in case of failure
+        return Collections.emptyList();
+    }
+    
+  }
+
+

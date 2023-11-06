@@ -8,6 +8,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
@@ -23,6 +24,7 @@ public class Movie {
 	private String movie_title;
 	
 	@JsonProperty("overview")
+	@Column(columnDefinition = "LONGTEXT")
 	private String movie_description;
 	
 	@JsonProperty("genre_ids")

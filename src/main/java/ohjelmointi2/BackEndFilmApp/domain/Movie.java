@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Entity;
@@ -42,8 +43,17 @@ public class Movie {
 	@JsonProperty("vote_count")
 	private int vote_count;
 	
+	@JsonIgnore
 	@ManyToMany(mappedBy = "movies")
-	private List<MovieList> movieLists = new ArrayList<>();
+	private List<FavoritesList> favoritesList = new ArrayList<>();
+	
+	@JsonIgnore
+	@ManyToMany(mappedBy = "movies")
+	private List<AboutToWatchList> aboutToWatch = new ArrayList<>();
+	
+	@JsonIgnore
+	@ManyToMany(mappedBy = "movies")
+	private List<OnWatchList> onWatchList = new ArrayList<>();
 	
 	// getters and setters
 	
@@ -71,14 +81,6 @@ public class Movie {
 	public void setMovie_genre(String[] movie_genre) {
 		this.movie_genre = movie_genre;
 	}
-	
-	public List<MovieList> getMovieLists() {
-		return movieLists;
-	}
-	public void setMovieLists(List<MovieList> movieLists) {
-		this.movieLists = movieLists;
-	}
-	
 	
 	public String getPoster_path() {
 		return poster_path;
@@ -111,15 +113,32 @@ public class Movie {
 		this.vote_count = vote_count;
 	}
 	
+	public List<FavoritesList> getFavoritesList() {
+		return favoritesList;
+	}
+	public void setFavoritesList(List<FavoritesList> favoritesList) {
+		this.favoritesList = favoritesList;
+	}
 	
+	public List<AboutToWatchList> getAboutToWatch() {
+		return aboutToWatch;
+	}
+	public void setAboutToWatch(List<AboutToWatchList> aboutToWatch) {
+		this.aboutToWatch = aboutToWatch;
+	}
+	public List<OnWatchList> getOnWatchList() {
+		return onWatchList;
+	}
+	public void setOnWatchList(List<OnWatchList> onWatchList) {
+		this.onWatchList = onWatchList;
+	}
 	// ToString 
-	
 	@Override
 	public String toString() {
 		return "Movie [movie_id=" + movie_id + ", movie_title=" + movie_title + ", movie_description="
 				+ movie_description + ", movie_genre=" + Arrays.toString(movie_genre) + ", poster_path=" + poster_path
 				+ ", original_title=" + original_title + ", release_date=" + release_date + ", vote_average="
-				+ vote_average + ", vote_count=" + vote_count + ", movieLists=" + movieLists + "]";
+				+ vote_average + ", vote_count=" + vote_count + ", movieLists=" + "]";
 	}
 	
 

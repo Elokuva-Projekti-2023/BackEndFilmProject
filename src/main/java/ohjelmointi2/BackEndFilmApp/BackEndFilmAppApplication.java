@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ohjelmointi2.BackEndFilmApp.domain.FavoritesList;
 import ohjelmointi2.BackEndFilmApp.domain.User;
 import ohjelmointi2.BackEndFilmApp.domain.UserRepository;
 
@@ -26,6 +27,7 @@ public class BackEndFilmAppApplication {
 			log.info("save a user");
 			User user1 = new User("usernameAnna","anna@mail.com", "password");
 			userrepository.save(user1);
+			
 			User user2 = new User("usernameMatti","matti@mail.com", "password");
 			userrepository.save(user2);
 			User user3 = new User("usernameTiina","tiina@mail.com", "password");

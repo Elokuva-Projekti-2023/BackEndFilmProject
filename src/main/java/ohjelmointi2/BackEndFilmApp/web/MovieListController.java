@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import ohjelmointi2.BackEndFilmApp.domain.FavoritesList;
 import ohjelmointi2.BackEndFilmApp.domain.Movie;
 import ohjelmointi2.BackEndFilmApp.domain.MovieDetailResponse;
 import ohjelmointi2.BackEndFilmApp.domain.MovieList;
+import ohjelmointi2.BackEndFilmApp.domain.User;
 
 import java.util.List;
 
@@ -21,21 +23,7 @@ public class MovieListController {
     private TmdbService tmdbService; // Assuming you have a MovieService to fetch movie details
 
 
-    // Create a new movie list
-    @PostMapping("/create")
-    public ResponseEntity<MovieList> createMovieList(@RequestBody MovieList movieList) {
-        MovieList createdMovieList = movieListService.createMovieList(movieList);
-        return ResponseEntity.ok(createdMovieList);
-    }
-
-    // Get a movie list by ID
-    @GetMapping("/{movieListId}")
-    public ResponseEntity<MovieList> getMovieListById(@PathVariable Long movieListId) {
-        MovieList movieList = movieListService.getMovieListById(movieListId);
-        return ResponseEntity.ok(movieList);
-    }
-
- // Show one movie by Id
+    // Show one movie by Id
     @GetMapping("/movie/{movieId}")
     public ResponseEntity<MovieDetailResponse> getMovieById(@PathVariable Long movieId) {
         MovieDetailResponse movie = tmdbService.getMovieDetails(movieId);
@@ -48,19 +36,34 @@ public class MovieListController {
         }
     }
 
- // Add a movie to a movie list
-    @PostMapping("/{movieListId}/add-movie/{movieId}")
-    public ResponseEntity<MovieList> addMovieToMovieList(
+    // List all movie lists
+    @GetMapping("/allfavorites")
+    public ResponseEntity<List<FavoritesList>> getAllFavoritesList() {
+        List<FavoritesList> movieLists = movieListService.getAllFavoritesMovieLists();
+        return ResponseEntity.ok(movieLists);
+    }
+    
+    // List all users
+    @GetMapping("/allusers")
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> users = movieListService.getAllUsers();
+        return ResponseEntity.ok(users);
+    }
+    
+    // Add a movie to a favorites list
+    
+    @PostMapping("/{movieListId}/add-movie-to-favorites/{movieId}")
+    public ResponseEntity<FavoritesList> addMovieToFavoritesList(
             @PathVariable Long movieListId,
             @PathVariable Long movieId) {
         // Fetch the movie details from an external API using a MovieService
         MovieDetailResponse movie = tmdbService.getMovieDetails(movieId);
 
         if (movie != null) {
-            MovieList updatedMovieList = movieListService.addMovieToMovieList(movieListId, movie);
-            if (updatedMovieList != null) {
+        	FavoritesList updatedFavoritesList = movieListService.addMovieToFavoritesList(movieListId, movie);
+            if (updatedFavoritesList != null) {
                 // Movie added successfully
-                return ResponseEntity.ok(updatedMovieList);
+                return ResponseEntity.ok(updatedFavoritesList);
             } else {
                 // Handle the case where the movie list could not be found
                 return ResponseEntity.notFound().build();
@@ -71,13 +74,6 @@ public class MovieListController {
         }
     }
 
+    
 
-    // List all movie lists
-    @GetMapping("/all")
-    public ResponseEntity<List<MovieList>> getAllMovieLists() {
-        List<MovieList> movieLists = movieListService.getAllMovieLists();
-        return ResponseEntity.ok(movieLists);
-    }
-
-    // Other methods for updating, deleting, and managing movie lists
 }

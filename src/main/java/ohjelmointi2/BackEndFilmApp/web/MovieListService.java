@@ -3,11 +3,13 @@ package ohjelmointi2.BackEndFilmApp.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ohjelmointi2.BackEndFilmApp.domain.FavoritesList;
+import ohjelmointi2.BackEndFilmApp.domain.FavoritesListRepository;
 import ohjelmointi2.BackEndFilmApp.domain.Movie;
 import ohjelmointi2.BackEndFilmApp.domain.MovieDetailResponse;
-import ohjelmointi2.BackEndFilmApp.domain.MovieList;
-import ohjelmointi2.BackEndFilmApp.domain.MovieListRepository;
 import ohjelmointi2.BackEndFilmApp.domain.MovieRepository;
+import ohjelmointi2.BackEndFilmApp.domain.User;
+import ohjelmointi2.BackEndFilmApp.domain.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,29 +17,40 @@ import java.util.List;
 @Service
 public class MovieListService {
 
-    private final MovieListRepository movieListRepository;
     
     private final MovieRepository movieRepository;
 
-
+    private final FavoritesListRepository favoritesListRepository;
+    
+    private final UserRepository userRepository;
+    
     @Autowired
-    public MovieListService(MovieListRepository movieListRepository, MovieRepository movieRepository) {
-        this.movieListRepository = movieListRepository;
+    public MovieListService(MovieRepository movieRepository,
+    		FavoritesListRepository favoritesListRepository, UserRepository userRepository) {
+
         this.movieRepository = movieRepository;
+		this.favoritesListRepository = favoritesListRepository;
+		this.userRepository = userRepository;
+    }
+    
+    // Favotites List Service
+    
+    
+    public FavoritesList getFavoritesListById(Long movieListId) {
+    	return favoritesListRepository.findById(movieListId).orElse(null);
     }
 
-
-    public MovieList createMovieList(MovieList movieList) {
-        return movieListRepository.save(movieList);
+    public FavoritesList saveFavoritesList(FavoritesList favoritesList) {
+        return favoritesListRepository.save(favoritesList);
     }
-
-    public MovieList getMovieListById(Long movieListId) {
-        return movieListRepository.findById(movieListId).orElse(null);
+    
+    public List<FavoritesList> getAllFavoritesMovieLists() {
+        return (List<FavoritesList>) favoritesListRepository.findAll();
     }
-
-    public MovieList addMovieToMovieList(Long movieListId, MovieDetailResponse movieDetail) {
+    
+    public FavoritesList addMovieToFavoritesList(Long movieListId, MovieDetailResponse movieDetail) {
     	
-        MovieList movieList = getMovieListById(movieListId);
+        FavoritesList movieList = getFavoritesListById(movieListId);
         if (movieList != null) {
             // Create a new Movie entity or class to represent the external API data
             // You may need to adapt this based on your actual Movie entity
@@ -65,13 +78,16 @@ public class MovieListService {
             
             movieList.getMovies().add(movie);
             
-            return movieListRepository.save(movieList);
+            return favoritesListRepository.save(movieList);
         }
         return null;
     }
-    public List<MovieList> getAllMovieLists() {
-        return (List<MovieList>) movieListRepository.findAll();
-    }
-
-    // Other methods for updating, deleting, and managing movie lists
+    
+    // User Service
+    
+    
+	 public List<User> getAllUsers() {
+	        return (List<User>) userRepository.findAll();
+	    }
+    
 }

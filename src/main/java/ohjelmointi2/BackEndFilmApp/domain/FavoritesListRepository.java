@@ -2,6 +2,6 @@ package ohjelmointi2.BackEndFilmApp.domain;
 
 import org.springframework.data.repository.CrudRepository;
 
-public interface UserMovieRepository extends CrudRepository<UserMovie, Long>{
+public interface FavoritesListRepository extends CrudRepository<FavoritesList, Long>{
 
 }

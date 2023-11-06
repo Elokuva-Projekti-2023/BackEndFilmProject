@@ -19,7 +19,7 @@ public class FavoritesList {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long movielist_id;
+	private Long favoritesListId;
 	
 	@OneToOne
     @JoinColumn(name = "user_id")
@@ -28,8 +28,8 @@ public class FavoritesList {
 
     @ManyToMany
     @JoinTable(
-        name = "movielist_movie",
-        joinColumns = @JoinColumn(name = "movielist_id"),
+        name = "favoriteslist_movie",
+        joinColumns = @JoinColumn(name = "favoritesListId"),
         inverseJoinColumns = @JoinColumn(name = "movie_id")
     )
     private List<Movie> movies = new ArrayList<>();
@@ -42,9 +42,9 @@ public class FavoritesList {
 		// TODO Auto-generated constructor stub
 	}
 
-	public FavoritesList(Long movielist_id, User user, List<Movie> movies) {
+	public FavoritesList(Long favoritesListId, User user, List<Movie> movies) {
 
-	this.movielist_id = movielist_id;
+	this.favoritesListId = favoritesListId;
 	this.user = user;
 	this.movies = movies;
 }
@@ -54,11 +54,11 @@ public class FavoritesList {
 
 
 	public Long getMovielist_id() {
-		return movielist_id;
+		return favoritesListId;
 	}
 
-	public void setMovielist_id(Long movielist_id) {
-		this.movielist_id = movielist_id;
+	public void setMovielist_id(Long favoritesListId) {
+		this.favoritesListId = favoritesListId;
 	}
 
 

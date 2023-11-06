@@ -28,8 +28,8 @@ public class OnWatchList {
 
     @ManyToMany
     @JoinTable(
-        name = "movielist_movie",
-        joinColumns = @JoinColumn(name = "movielist_id"),
+        name = "onwatchlist_movie",
+        joinColumns = @JoinColumn(name = "onWatchListId"),
         inverseJoinColumns = @JoinColumn(name = "movie_id")
     )
     private List<Movie> movies = new ArrayList<>();

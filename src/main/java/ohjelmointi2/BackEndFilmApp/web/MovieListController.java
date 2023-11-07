@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import ohjelmointi2.BackEndFilmApp.domain.AboutToWatchList;
 import ohjelmointi2.BackEndFilmApp.domain.FavoritesList;
 import ohjelmointi2.BackEndFilmApp.domain.Movie;
 import ohjelmointi2.BackEndFilmApp.domain.MovieDetailResponse;
 import ohjelmointi2.BackEndFilmApp.domain.MovieList;
+import ohjelmointi2.BackEndFilmApp.domain.OnWatchList;
 import ohjelmointi2.BackEndFilmApp.domain.User;
 
 import java.util.List;
@@ -74,6 +76,52 @@ public class MovieListController {
         }
     }
 
+// Add a movie to a watched list
     
+    @PostMapping("/{movieListId}/add-movie-to-watched/{movieId}")
+    public ResponseEntity<OnWatchList> addMovieToOnWatchList(
+            @PathVariable Long movieListId,
+            @PathVariable Long movieId) {
+        // Fetch the movie details from an external API using a MovieService
+        MovieDetailResponse movie = tmdbService.getMovieDetails(movieId);
+
+        if (movie != null) {
+        	OnWatchList updatedOnWatchList = movieListService.addMovieToOnWatchList(movieListId, movie);
+            if (updatedOnWatchList != null) {
+                // Movie added successfully
+                return ResponseEntity.ok(updatedOnWatchList);
+            } else {
+                // Handle the case where the movie list could not be found
+                return ResponseEntity.notFound().build();
+            }
+        } else {
+            // Handle the case where the movie details could not be fetched
+            return ResponseEntity.notFound().build();
+        }
+    }
+    
+// Add a movie to about-to-watch-list
+    
+    @PostMapping("/{movieListId}/add-movie-to-about-to-watch/{movieId}")
+    public ResponseEntity<AboutToWatchList> addMovieToAboutToWatchList(
+            @PathVariable Long movieListId,
+            @PathVariable Long movieId) {
+        // Fetch the movie details from an external API using a MovieService
+        MovieDetailResponse movie = tmdbService.getMovieDetails(movieId);
+
+        if (movie != null) {
+        	AboutToWatchList updatedAboutToWatchList = movieListService.addMovieToAboutToWatchList(movieListId, movie);
+            if (updatedAboutToWatchList != null) {
+                // Movie added successfully
+                return ResponseEntity.ok(updatedAboutToWatchList);
+            } else {
+                // Handle the case where the movie list could not be found
+                return ResponseEntity.notFound().build();
+            }
+        } else {
+            // Handle the case where the movie details could not be fetched
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 }

@@ -31,7 +31,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		
 		log.info("Load user by username: " + userName);
 		User curruser = usersRepo.findByUserName(userName);
-		log.info("Käyttäjä ID: " + curruser.getUser_id());
+		log.info("Käyttäjä ID: " + curruser.getUserId());
 		
 		log.info("Current user: " + curruser.toString());
 		List<String> authorities = new ArrayList<>();

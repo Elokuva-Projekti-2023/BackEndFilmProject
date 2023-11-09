@@ -22,7 +22,7 @@ public class OnWatchList {
 	private Long onWatchListId;
 	
 	@OneToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userId")
 	@JsonIgnore
     private User user;
 

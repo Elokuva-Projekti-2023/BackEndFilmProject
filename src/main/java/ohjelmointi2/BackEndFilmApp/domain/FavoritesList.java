@@ -22,7 +22,7 @@ public class FavoritesList {
 	private Long favoritesListId;
 	
 	@OneToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userId")
 	@JsonIgnore
     private User user;
 

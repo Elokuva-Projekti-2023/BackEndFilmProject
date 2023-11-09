@@ -1,6 +1,7 @@
 package ohjelmointi2.BackEndFilmApp.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import ohjelmointi2.BackEndFilmApp.domain.AboutToWatchList;
@@ -13,6 +14,7 @@ import ohjelmointi2.BackEndFilmApp.domain.MovieRepository;
 import ohjelmointi2.BackEndFilmApp.domain.OnWatchList;
 import ohjelmointi2.BackEndFilmApp.domain.OnWatchListRepository;
 import ohjelmointi2.BackEndFilmApp.domain.User;
+import ohjelmointi2.BackEndFilmApp.domain.UserMovieLists;
 import ohjelmointi2.BackEndFilmApp.domain.UserRepository;
 
 import java.util.ArrayList;
@@ -205,5 +207,17 @@ public AboutToWatchList addMovieToAboutToWatchList(Long movieListId, MovieDetail
 	 public List<User> getAllUsers() {
 	        return (List<User>) userRepository.findAll();
 	    }
-    
+	 
+	 // Get movielists of one user
+ 
+	 public ResponseEntity<UserMovieLists> getUserMovieLists(Long userId) {
+	        UserMovieLists userMovieLists = new UserMovieLists();
+
+	        userMovieLists.setFavoritesList(favoritesListRepository.findByUserUserId(userId));
+	        userMovieLists.setAboutToWatchList(aboutToWatchListRepository.findByUserUserId(userId));
+	        userMovieLists.setOnWatchList(watchedListRepository.findByUserUserId(userId));
+
+	        return ResponseEntity.ok(userMovieLists);
+	    }
+	 
 }

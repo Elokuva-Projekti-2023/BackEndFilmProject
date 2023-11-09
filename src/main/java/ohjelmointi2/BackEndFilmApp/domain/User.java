@@ -15,7 +15,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long user_id;
+    private Long userId;
 
     @Column(name = "user_name")
     private String userName;
@@ -108,11 +108,11 @@ public class User {
 		this.aboutToWatchList = aboutToWatchList;
 	}
 
-	public Long getUser_id() {
-        return user_id;
+	public Long getUserId() {
+        return userId;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

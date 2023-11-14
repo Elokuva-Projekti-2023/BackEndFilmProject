@@ -6,8 +6,10 @@ import org.springframework.data.repository.CrudRepository;
 
 
 public interface UserRepository extends CrudRepository<User, Long> {
-	Optional<User> findById(Long user_id);
-	//User findByUser_email (String user_email); 
 	
-	User findByUserName(String userName);// tätä tarvitaan userdetailserviceen
+	
+	Optional<User> findByfirebaseUid(String firebaseUid);
+	//User findByUser_email (String user_email); 
+
+
 }

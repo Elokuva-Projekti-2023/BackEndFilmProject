@@ -4,4 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface FavoritesListRepository extends CrudRepository<FavoritesList, Long>{
 
+	FavoritesList findByUserUserId(Long userId);
+
 }

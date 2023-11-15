@@ -11,6 +11,8 @@ import ohjelmointi2.BackEndFilmApp.domain.MovieDetailResponse;
 import ohjelmointi2.BackEndFilmApp.domain.MovieList;
 import ohjelmointi2.BackEndFilmApp.domain.OnWatchList;
 import ohjelmointi2.BackEndFilmApp.domain.User;
+import ohjelmointi2.BackEndFilmApp.domain.UserRepository;
+import ohjelmointi2.BackEndFilmApp.domain.UserMovieLists;
 
 import java.util.List;
 
@@ -23,6 +25,9 @@ public class MovieListController {
     
     @Autowired
     private TmdbService tmdbService; // Assuming you have a MovieService to fetch movie details
+    
+    @Autowired 
+    private UserRepository userRepository;
 
 
     // Show one movie by Id
@@ -51,6 +56,24 @@ public class MovieListController {
         List<User> users = movieListService.getAllUsers();
         return ResponseEntity.ok(users);
     }
+    
+    // Get all movielists of one user
+    
+    @GetMapping("/{userId}/movie-lists")
+    public ResponseEntity<UserMovieLists> getUserMovieLists(@PathVariable Long userId) {
+        User user = userRepository.findById(userId).orElse(null);
+
+        if (user != null) {
+            UserMovieLists userMovieLists = new UserMovieLists();
+            userMovieLists.setFavoritesList(user.getFavoritesList());
+            userMovieLists.setOnWatchList(user.getOnWatchList());
+            userMovieLists.setAboutToWatchList(user.getAboutToWatchList());
+            return ResponseEntity.ok(userMovieLists);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     
     // Add a movie to a favorites list
     

@@ -10,11 +10,15 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+<<<<<<< HEAD
     private Long user_id;
     
     
     @Column(name = "firebase_uid", unique = true)  // Firebase
     private String firebaseUid;
+=======
+    private Long userId;
+>>>>>>> 111f4a2170d9b1a73ad7190228c03671d0fb8607
 
     @Column(name = "user_name")
     private String userName;
@@ -111,11 +115,11 @@ public class User {
 		this.aboutToWatchList = aboutToWatchList;
 	}
 
-	public Long getUser_id() {
-        return user_id;
+	public Long getUserId() {
+        return userId;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

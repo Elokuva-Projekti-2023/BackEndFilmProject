@@ -2,20 +2,22 @@ package ohjelmointi2.BackEndFilmApp.domain;
 
 import jakarta.persistence.*;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 @Table(name = "users")
 public class User {
 
-    public static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
+   // public static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
+
+    
+    
+    @Column(name = "firebase_uid", unique = true)  // Firebase
+    private String firebaseUid;
+
+    
 
     @Column(name = "user_name")
     private String userName;
@@ -23,9 +25,6 @@ public class User {
     @Column(name = "user_email")
     private String user_email;
 
-    @JsonIgnore
-    @Column(name = "user_password")
-    private String user_password;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     private FavoritesList favoritesList;
@@ -35,11 +34,13 @@ public class User {
     
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     private AboutToWatchList aboutToWatchList;
+    
+    // constructors
 
-    public User(String userName, String user_email, String user_password) {
+    public User(String firebaseUid, String userName, String user_email) {
+    	this.firebaseUid = firebaseUid;
         this.userName = userName;
         this.user_email = user_email;
-        setUser_password(user_password);
 
         // Create a new FavoritesList and associate it with the user
         this.favoritesList = new FavoritesList();
@@ -55,11 +56,23 @@ public class User {
     }
 
 
-    public User() {
+	public User() {
         super();
     }
 
-    public String getUserName() {
+	
+	
+    public String getFirebaseUid() {
+		return firebaseUid;
+	}
+
+
+	public void setFirebaseUid(String firebaseUid) {
+		this.firebaseUid = firebaseUid;
+	}
+
+
+	public String getUserName() {
         return userName;
     }
 
@@ -75,14 +88,7 @@ public class User {
         this.user_email = user_email;
     }
 
-    public String getUser_password() {
-        return user_password;
-    }
-
-    public void setUser_password(String user_password) {
-        this.user_password = PASSWORD_ENCODER.encode(user_password);
-    }
-
+    
     public FavoritesList getFavoritesList() {
         return favoritesList;
     }

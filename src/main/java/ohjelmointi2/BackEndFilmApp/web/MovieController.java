@@ -66,28 +66,4 @@ public class MovieController {
         return ResponseEntity.ok(searchResults);
     }
   
-    /*
-   @PostMapping("/save-to-watched/{userId}/{movieId}")
-    public ResponseEntity<String> saveToWatched(@PathVariable Long userId, @PathVariable Long movieId) {
-        // Fetch the user from your database (userService.getUserById(userId))
-        User user = userService.getUserById(userId);
-
-        // Save the movie to the user's "Watched List"
-        tmdbService.saveToWatched(user, movieId);
-
-        return ResponseEntity.ok("Movie saved to Watched List.");
-    }
-   
-
-    @PostMapping("/save-to-to-watch/{userId}/{movieId}")
-    public ResponseEntity<String> saveToToWatch(@PathVariable Long userId, @PathVariable Long movieId) {
-        // Fetch the user from your database (userService.getUserById(userId))
-        User user = userService.getUserById(userId);
-
-        // Save the movie to the user's "To Watch List"
-        tmdbService.saveToToWatch(user, movieId);
-
-        return ResponseEntity.ok("Movie saved to To Watch List.");
-    } 
-    */
 }

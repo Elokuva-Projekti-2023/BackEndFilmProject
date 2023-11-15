@@ -10,15 +10,14 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-<<<<<<< HEAD
-    private Long user_id;
+    private Long userId;
+
     
     
     @Column(name = "firebase_uid", unique = true)  // Firebase
     private String firebaseUid;
-=======
-    private Long userId;
->>>>>>> 111f4a2170d9b1a73ad7190228c03671d0fb8607
+
+    
 
     @Column(name = "user_name")
     private String userName;

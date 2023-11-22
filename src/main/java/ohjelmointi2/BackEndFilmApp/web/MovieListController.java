@@ -147,4 +147,28 @@ public class MovieListController {
         }
     }
 
+
+
+    @DeleteMapping("/{movieListId}/remove-movie-from-favorites/{movieId}")
+    public ResponseEntity<String> removeMovieFromList(
+            @PathVariable Long movieListId,
+            @PathVariable Long movieId) {
+        // Call the service method to remove the movie from the specified list
+        ResponseEntity<String> response = movieListService.removeMovieFromList(movieListId, movieId);
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            // Movie removed successfully, return the response
+            return response;
+        } else {
+            // Handle the case where the movie could not be removed (e.g., movie or list not found)
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
+	
+	
+	
+	
+	
+	
+	

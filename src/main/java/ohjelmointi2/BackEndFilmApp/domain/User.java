@@ -6,18 +6,13 @@ import jakarta.persistence.*;
 @Table(name = "users")
 public class User {
 
-   // public static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
-
-    
     
     @Column(name = "firebase_uid", unique = true)  // Firebase
     private String firebaseUid;
-
-    
 
     @Column(name = "user_name")
     private String userName;

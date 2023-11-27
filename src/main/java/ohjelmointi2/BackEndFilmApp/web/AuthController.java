@@ -2,12 +2,18 @@ package ohjelmointi2.BackEndFilmApp.web;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseToken;
 import com.google.firebase.auth.UserRecord;
 import com.google.firebase.auth.UserRecord.CreateRequest;
 
 import ohjelmointi2.BackEndFilmApp.domain.RegistrationRequest;
+import ohjelmointi2.BackEndFilmApp.domain.SignInRequest;
 import ohjelmointi2.BackEndFilmApp.domain.User;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,13 +25,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/auth")
 public class AuthController {
 
-    private final FirebaseAuth firebaseAuth;
-    private final UserService userService;
+	@Autowired
+    private FirebaseAuth firebaseAuth;
+    
+    @Autowired
+    private UserService userService;
+    
+    @Autowired
+    private TokenService tokenService;
 
     @Autowired
-    public AuthController(FirebaseAuth firebaseAuth, UserService userService) {
+    public AuthController(FirebaseAuth firebaseAuth, UserService userService, TokenService tokenService) {
         this.firebaseAuth = firebaseAuth;
         this.userService = userService;
+        this.tokenService = tokenService;
     }
 
     @PostMapping("/register")
@@ -55,34 +68,31 @@ public class AuthController {
     }
     
     @PostMapping("/signin")
-    public ResponseEntity<?> signInUser(@RequestBody RegistrationRequest request) {
+    public ResponseEntity<?> signIn(@RequestBody SignInRequest signInRequest) {
         try {
-            // Sign in with Firebase
-            UserRecord userRecord = firebaseAuth.getUserByEmail(request.getEmail());
-
-            // Implement your logic here, for example, check the provided password against the stored hash
-            // ...
-
-            // Additional actions after successful sign-in
-            // ...
-
-            // You can retrieve user data from your userService
-            // Replace this with the actual method you use to get user data
+            // Validate user credentials using Firebase or your preferred authentication mechanism
+            UserRecord userRecord = firebaseAuth.getUserByEmail(signInRequest.getEmail());
+            
             User userData = userService.getUserData(userRecord.getUid());
 
-            // Return user data in the response
-            return ResponseEntity.ok(userData);
+            // Generate a JWT token for the user session
+			String sessionToken = tokenService.generateToken(userData.getFirebaseUid(), userData.getUser_email());
+
+			// Return user data and the session token in the response
+			Map<String, Object> response = new HashMap<>();
+			response.put("userData", userData);
+			response.put("sessionToken", sessionToken);
+
+			return ResponseEntity.ok(response);
         } catch (FirebaseAuthException e) {
-            // Handle sign-in errors
-            return handleSignInError(e);
+            // Handle Firebase authentication exception
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
+        } catch (Exception e) {
+            // Log the exception details for debugging
+            e.printStackTrace();
+            // Handle other exceptions
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
         }
     }
-
-    private ResponseEntity<String> handleSignInError(FirebaseAuthException e) {
-        System.err.println("Sign-in error: " + e.getMessage());
-        return ResponseEntity.status(401).body("Invalid email or password");
-    }
-
-
 
 }

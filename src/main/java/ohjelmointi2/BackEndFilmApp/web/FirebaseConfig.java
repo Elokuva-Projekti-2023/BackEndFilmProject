@@ -3,6 +3,8 @@ package ohjelmointi2.BackEndFilmApp.web;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -11,21 +13,35 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
 
-
 @Configuration
 public class FirebaseConfig {
 
+    @Value("${firebase.serviceAccountJsonPath}")
+    private String serviceAccountJsonPath;
+
+    @Value("${firebase.serviceAccountId}")
+    private String serviceAccountId;
+
     @Bean
-    public FirebaseAuth firebaseAuth() throws IOException {
-        FileInputStream serviceAccount = new FileInputStream("movie-users-adminsdk.json");
+    public FirebaseAuth firebaseAuth() {
+        try {
 
-        FirebaseOptions options = new FirebaseOptions.Builder()
-                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                .build();
+            FileInputStream serviceAccount = new FileInputStream(serviceAccountJsonPath);
 
-        FirebaseApp.initializeApp(options);
+            // Initialize FirebaseApp only if it hasn't been initialized before
+            if (FirebaseApp.getApps().isEmpty()) {
+                FirebaseOptions options = new FirebaseOptions.Builder()
+                        .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                        .setServiceAccountId(serviceAccountId)
+                        .build();
 
-        return FirebaseAuth.getInstance(); 
-    }
+                FirebaseApp.initializeApp(options);
+            }
+
+            return FirebaseAuth.getInstance();
+        } catch (IOException e) {
+            throw new RuntimeException("Error initializing Firebase Auth", e);
+        }
+    } 
+    
 }
-

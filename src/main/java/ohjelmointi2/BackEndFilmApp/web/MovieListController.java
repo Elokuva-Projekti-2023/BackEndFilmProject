@@ -147,4 +147,60 @@ public class MovieListController {
         }
     }
 
+
+
+    @DeleteMapping("/{movieListId}/remove-movie-from-favorites/{movieId}")
+    public ResponseEntity<String> removeMovieFromList(
+            @PathVariable Long movieListId,
+            @PathVariable Long movieId) {
+        // Call the service method to remove the movie from the specified list
+        ResponseEntity<String> response = movieListService.removeMovieFromFavoritesList(movieListId, movieId);
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            // Movie removed successfully, return the response
+            return response;
+        } else {
+            // Handle the case where the movie could not be removed (e.g., movie or list not found)
+            return ResponseEntity.notFound().build();
+        }
+    }
+    
+    @DeleteMapping("/{movieListId}/remove-movie-from-about-to-watch/{movieId}")
+    public ResponseEntity<String> removeMovieFromAboutToWatchList(
+            @PathVariable Long movieListId,
+            @PathVariable Long movieId) {
+        // Call the service method to remove the movie from the specified list
+        ResponseEntity<String> response = movieListService.removeMovieFromAboutToWatchList(movieListId, movieId);
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            // Movie removed successfully, return the response
+            return response;
+        } else {
+            // Handle the case where the movie could not be removed (e.g., movie or list not found)
+            return ResponseEntity.notFound().build();
+        }
+    }
+    
+    @DeleteMapping("/{movieListId}/remove-movie-from-on-watchlist/{movieId}")
+    public ResponseEntity<String> removeMovieFromOnWatchList(
+            @PathVariable Long movieListId,
+            @PathVariable Long movieId) {
+        // Call the service method to remove the movie from the specified list
+        ResponseEntity<String> response = movieListService.removeMovieFromOnWatchList(movieListId, movieId);
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            // Movie removed successfully, return the response
+            return response;
+        } else {
+            // Handle the case where the movie could not be removed (e.g., movie or list not found)
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
+	
+	
+	
+	
+	
+	
+	

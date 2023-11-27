@@ -221,7 +221,7 @@ public AboutToWatchList addMovieToAboutToWatchList(Long movieListId, MovieDetail
 	        return ResponseEntity.ok(userMovieLists);
 	    }
 	 
-	    public ResponseEntity<String> removeMovieFromList(Long movieListId, Long movieId) {
+	    public ResponseEntity<String> removeMovieFromFavoritesList(Long movieListId, Long movieId) {
 	        // Fetch the FavoritesList from the repository
 	        Optional<FavoritesList> optionalFavoritesList = favoritesListRepository.findById(movieListId);
 
@@ -242,6 +242,52 @@ public AboutToWatchList addMovieToAboutToWatchList(Long movieListId, MovieDetail
 	            return ResponseEntity.notFound().build();
 	        }
 	    }
+	    
+	    public ResponseEntity<String> removeMovieFromAboutToWatchList(Long movieListId, Long movieId) {
+	    	Optional<AboutToWatchList> optionalAboutToWatchList = aboutToWatchListRepository.findById(movieListId);
+	    	if (optionalAboutToWatchList.isPresent()) {
+	            AboutToWatchList aboutToWatchList = optionalAboutToWatchList.get();
+
+	    	
+            // Implement logic to remove the movie from the list
+            List<Movie> movies = aboutToWatchList.getMovies();
+            boolean movieRemoved = movies.removeIf(movie -> movie.getMovie_id().equals(movieId));
+
+            if (movieRemoved) {
+                aboutToWatchListRepository.save(aboutToWatchList); // Save the updated list
+                return ResponseEntity.ok("Movie removed successfully.");
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+	    	
+	    }
+	    
+	    public ResponseEntity<String> removeMovieFromOnWatchList(Long movieListId, Long movieId) {
+	    	Optional<OnWatchList> optionalOnWatchList = watchedListRepository.findById(movieListId);
+	    	if (optionalOnWatchList.isPresent()) {
+	            OnWatchList onWatchList = optionalOnWatchList.get();
+
+	    	
+            // Implement logic to remove the movie from the list
+            List<Movie> movies = onWatchList.getMovies();
+            boolean movieRemoved = movies.removeIf(movie -> movie.getMovie_id().equals(movieId));
+
+            if (movieRemoved) {
+                watchedListRepository.save(onWatchList); // Save the updated list
+                return ResponseEntity.ok("Movie removed successfully.");
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+	    	
+	    }
+	    
+	
 }
 	 
 

@@ -93,6 +93,7 @@ public class MovieListService {
     public FavoritesList addMovieToFavoritesList(Long movieListId, MovieDetailResponse movieDetail) {
     	
         FavoritesList movieList = getFavoritesListById(movieListId);
+        
         if (movieList != null) {
             // Create a new Movie entity or class to represent the external API data
             // You may need to adapt this based on your actual Movie entity
@@ -106,24 +107,23 @@ public class MovieListService {
             movie.setVote_average(movieDetail.getVote_average());
             movie.setVote_count(movieDetail.getVote_count());
             
-            // Tänne lisätään if else!!
-            
-            movieRepository.save(movie);
-            
-            // Set other relevant fields as needed
-
-            // Ensure the movie list's "movies" field is initialized
-            if (movieList.getMovies() == null) {
-                movieList.setMovies(new ArrayList<>());
+            // Check if the movie already exists in the list
+            if (movieList.getMovies().stream().noneMatch(existingMovie -> existingMovie.getMovie_id().equals(movie.getMovie_id()))) {
+                // Save the new movie
+                movieRepository.save(movie);
+                movieList.getMovies().add(movie);
+                
+                // Update and save the movie list
+                return favoritesListRepository.save(movieList);
+            } else {
+                // Movie already exists in the list
+                return null;
             }
-            
-            
-            movieList.getMovies().add(movie);
-            
-            return favoritesListRepository.save(movieList);
         }
+        
         return null;
     }
+
     
     
     //addMovieToOnWatchList

@@ -1,9 +1,13 @@
 package ohjelmointi2.BackEndFilmApp.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.web.bind.annotation.*;
-
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import ohjelmointi2.BackEndFilmApp.domain.AboutToWatchList;
 import ohjelmointi2.BackEndFilmApp.domain.FavoritesList;
 import ohjelmointi2.BackEndFilmApp.domain.Movie;
@@ -29,6 +33,8 @@ public class MovieListController {
     @Autowired 
     private UserRepository userRepository;
 
+    @Autowired 
+    private TokenService tokenService;
 
     // Show one movie by Id
     @GetMapping("/movie/{movieId}")
@@ -74,30 +80,58 @@ public class MovieListController {
         }
     }
 
-    
-    // Add a movie to a favorites list
+
     
     @PostMapping("/{movieListId}/add-movie-to-favorites/{movieId}")
-    public ResponseEntity<FavoritesList> addMovieToFavoritesList(
+    public ResponseEntity<?> addMovieToFavoritesList(
+            @RequestHeader("Authorization") String token,
             @PathVariable Long movieListId,
             @PathVariable Long movieId) {
-        // Fetch the movie details from an external API using a MovieService
-        MovieDetailResponse movie = tmdbService.getMovieDetails(movieId);
-
-        if (movie != null) {
-        	FavoritesList updatedFavoritesList = movieListService.addMovieToFavoritesList(movieListId, movie);
-            if (updatedFavoritesList != null) {
-                // Movie added successfully
-                return ResponseEntity.ok(updatedFavoritesList);
-            } else {
-                // Handle the case where the movie list could not be found
-                return ResponseEntity.notFound().build();
+        try {
+            // Validate input parameters
+            if (movieListId == null || movieId == null) {
+                return ResponseEntity.badRequest().body("Invalid movie list or movie ID");
             }
-        } else {
-            // Handle the case where the movie details could not be fetched
-            return ResponseEntity.notFound().build();
+
+            // Validate the user's session token
+            Claims claims = tokenService.parseToken(token.replace("Bearer ", ""));
+            if (claims != null) {
+                
+
+                // Fetch the movie details from an external API using a MovieService
+                MovieDetailResponse movie = tmdbService.getMovieDetails(movieId);
+
+                if (movie != null) {
+                    FavoritesList updatedFavoritesList = movieListService.addMovieToFavoritesList(movieListId, movie);
+                    if (updatedFavoritesList != null) {
+                        // Movie added successfully
+                        return ResponseEntity.ok(updatedFavoritesList);
+                    } else {
+                        // Handle the case where the movie list could not be found
+                        return ((BodyBuilder) ResponseEntity.notFound()).body("Movie list not found");
+                    }
+                } else {
+                    // Handle the case where the movie details could not be fetched
+                    return ((BodyBuilder) ResponseEntity.notFound()).body("Movie details not found");
+                }
+            } else {
+                // Invalid token
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
+            }
+        } catch (ExpiredJwtException e) {
+            // Token expired
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token expired");
+        } catch (JwtException e) {
+            // Invalid token
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
+        } catch (Exception e) {
+            // Log the exception details
+            e.printStackTrace();
+            // Handle other exceptions
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
         }
     }
+
 
 // Add a movie to a watched list
     

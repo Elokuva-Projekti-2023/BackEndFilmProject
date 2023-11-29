@@ -239,9 +239,19 @@ public class MovieListController {
 
 
     @DeleteMapping("/{movieListId}/remove-movie-from-favorites/{movieId}")
-    public ResponseEntity<String> removeMovieFromList(
+    public ResponseEntity<?> removeMovieFromList(
+    		@RequestHeader("Authorization") String token,
             @PathVariable Long movieListId,
             @PathVariable Long movieId) {
+    	try {
+            // Validate input parameters
+            if (movieListId == null || movieId == null) {
+                return ResponseEntity.badRequest().body("Invalid movie list or movie ID");
+            }
+
+            // Validate the user's session token
+            Claims claims = tokenService.parseToken(token.replace("Bearer ", ""));
+            if (claims != null) {
         // Call the service method to remove the movie from the specified list
         ResponseEntity<String> response = movieListService.removeMovieFromFavoritesList(movieListId, movieId);
 
@@ -252,12 +262,38 @@ public class MovieListController {
             // Handle the case where the movie could not be removed (e.g., movie or list not found)
             return ResponseEntity.notFound().build();
         }
+    } else {
+        // Invalid token
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
     }
+} catch (ExpiredJwtException e) {
+    // Token expired
+    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token expired");
+} catch (JwtException e) {
+    // Invalid token
+    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
+} catch (Exception e) {
+    // Log the exception details
+    e.printStackTrace();
+    // Handle other exceptions
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
+}
+}
     
     @DeleteMapping("/{movieListId}/remove-movie-from-about-to-watch/{movieId}")
-    public ResponseEntity<String> removeMovieFromAboutToWatchList(
+    public ResponseEntity<?> removeMovieFromAboutToWatchList(
+    		@RequestHeader("Authorization") String token,
             @PathVariable Long movieListId,
             @PathVariable Long movieId) {
+    	try {
+            // Validate input parameters
+            if (movieListId == null || movieId == null) {
+                return ResponseEntity.badRequest().body("Invalid movie list or movie ID");
+            }
+
+            // Validate the user's session token
+            Claims claims = tokenService.parseToken(token.replace("Bearer ", ""));
+            if (claims != null) {
         // Call the service method to remove the movie from the specified list
         ResponseEntity<String> response = movieListService.removeMovieFromAboutToWatchList(movieListId, movieId);
 
@@ -268,12 +304,39 @@ public class MovieListController {
             // Handle the case where the movie could not be removed (e.g., movie or list not found)
             return ResponseEntity.notFound().build();
         }
-    }
+            } else {
+                // Invalid token
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
+            }
+        } catch (ExpiredJwtException e) {
+            // Token expired
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token expired");
+        } catch (JwtException e) {
+            // Invalid token
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
+        } catch (Exception e) {
+            // Log the exception details
+            e.printStackTrace();
+            // Handle other exceptions
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
+        }
+        }
+    
     
     @DeleteMapping("/{movieListId}/remove-movie-from-on-watchlist/{movieId}")
-    public ResponseEntity<String> removeMovieFromOnWatchList(
+    public ResponseEntity<?> removeMovieFromOnWatchList(
+    		@RequestHeader("Authorization") String token,
             @PathVariable Long movieListId,
             @PathVariable Long movieId) {
+    	try {
+            // Validate input parameters
+            if (movieListId == null || movieId == null) {
+                return ResponseEntity.badRequest().body("Invalid movie list or movie ID");
+            }
+
+            // Validate the user's session token
+            Claims claims = tokenService.parseToken(token.replace("Bearer ", ""));
+            if (claims != null) {
         // Call the service method to remove the movie from the specified list
         ResponseEntity<String> response = movieListService.removeMovieFromOnWatchList(movieListId, movieId);
 
@@ -283,8 +346,24 @@ public class MovieListController {
         } else {
             // Handle the case where the movie could not be removed (e.g., movie or list not found)
             return ResponseEntity.notFound().build();
+        }} else {
+            // Invalid token
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
         }
+    } catch (ExpiredJwtException e) {
+        // Token expired
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token expired");
+    } catch (JwtException e) {
+        // Invalid token
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
+    } catch (Exception e) {
+        // Log the exception details
+        e.printStackTrace();
+        // Handle other exceptions
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
     }
+    }
+
 }
 	
 	

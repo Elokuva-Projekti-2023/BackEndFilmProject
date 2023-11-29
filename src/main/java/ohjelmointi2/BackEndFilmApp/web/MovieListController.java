@@ -136,9 +136,19 @@ public class MovieListController {
 // Add a movie to a watched list
     
     @PostMapping("/{movieListId}/add-movie-to-watched/{movieId}")
-    public ResponseEntity<OnWatchList> addMovieToOnWatchList(
+    public ResponseEntity<?> addMovieToOnWatchList(
+    		@RequestHeader("Authorization") String token,
             @PathVariable Long movieListId,
             @PathVariable Long movieId) {
+    	try {
+            // Validate input parameters
+            if (movieListId == null || movieId == null) {
+                return ResponseEntity.badRequest().body("Invalid movie list or movie ID");
+            }
+
+            // Validate the user's session token
+            Claims claims = tokenService.parseToken(token.replace("Bearer ", ""));
+            if (claims != null) {
         // Fetch the movie details from an external API using a MovieService
         MovieDetailResponse movie = tmdbService.getMovieDetails(movieId);
 
@@ -149,20 +159,48 @@ public class MovieListController {
                 return ResponseEntity.ok(updatedOnWatchList);
             } else {
                 // Handle the case where the movie list could not be found
-                return ResponseEntity.notFound().build();
+                return ((BodyBuilder) ResponseEntity.notFound()).body("Movie list not found");
             }
         } else {
             // Handle the case where the movie details could not be fetched
-            return ResponseEntity.notFound().build();
+            return ((BodyBuilder) ResponseEntity.notFound()).body("Movie details not found");
         }
+            }else {
+            // Invalid token
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
+        }
+    } catch (ExpiredJwtException e) {
+        // Token expired
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token expired");
+    } catch (JwtException e) {
+        // Invalid token
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
+    } catch (Exception e) {
+        // Log the exception details
+        e.printStackTrace();
+        // Handle other exceptions
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
     }
+}
+    
     
 // Add a movie to about-to-watch-list
     
     @PostMapping("/{movieListId}/add-movie-to-about-to-watch/{movieId}")
-    public ResponseEntity<AboutToWatchList> addMovieToAboutToWatchList(
+    public ResponseEntity<?> addMovieToAboutToWatchList(
+    		@RequestHeader("Authorization") String token,
             @PathVariable Long movieListId,
             @PathVariable Long movieId) {
+    	try {
+            // Validate input parameters
+            if (movieListId == null || movieId == null) {
+                return ResponseEntity.badRequest().body("Invalid movie list or movie ID");
+            }
+
+            // Validate the user's session token
+            Claims claims = tokenService.parseToken(token.replace("Bearer ", ""));
+            if (claims != null) {
+                
         // Fetch the movie details from an external API using a MovieService
         MovieDetailResponse movie = tmdbService.getMovieDetails(movieId);
 
@@ -173,13 +211,30 @@ public class MovieListController {
                 return ResponseEntity.ok(updatedAboutToWatchList);
             } else {
                 // Handle the case where the movie list could not be found
-                return ResponseEntity.notFound().build();
+                return ((BodyBuilder) ResponseEntity.notFound()).body("Movie list not found");
             }
         } else {
             // Handle the case where the movie details could not be fetched
-            return ResponseEntity.notFound().build();
+            return ((BodyBuilder) ResponseEntity.notFound()).body("Movie details not found");
         }
+    } else {
+        // Invalid token
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
     }
+} catch (ExpiredJwtException e) {
+    // Token expired
+    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token expired");
+} catch (JwtException e) {
+    // Invalid token
+    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
+} catch (Exception e) {
+    // Log the exception details
+    e.printStackTrace();
+    // Handle other exceptions
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
+}
+}
+    
 
 
 

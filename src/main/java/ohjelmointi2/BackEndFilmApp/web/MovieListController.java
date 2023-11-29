@@ -323,6 +323,7 @@ public class MovieListController {
         }
     
     
+    // poistetaan leffa katsotut leffat -listalta (metodi nimetty hassusti)
     @DeleteMapping("/{movieListId}/remove-movie-from-on-watchlist/{movieId}")
     public ResponseEntity<?> removeMovieFromOnWatchList(
     		@RequestHeader("Authorization") String token,

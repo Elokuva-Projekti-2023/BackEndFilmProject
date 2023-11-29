@@ -1,6 +1,6 @@
 # Fetching all favorite lists
 
-**URL:** `/movie/{movieId}`
+**URL:** `movielists/movie/{movieId}`
 
 **Method:** `GET`
 

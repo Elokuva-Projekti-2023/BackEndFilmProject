@@ -1,6 +1,6 @@
 # Fetching upcoming movies
 
-**URL:** `/upcoming`
+**URL:** `/api/tmdb/upcoming`
 
 **Method:** `GET`
 

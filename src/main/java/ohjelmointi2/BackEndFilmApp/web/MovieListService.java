@@ -262,6 +262,7 @@ public AboutToWatchList addMovieToAboutToWatchList(Long movieListId, MovieDetail
 	    	
 	    }
 	    
+	    //tämä poistaa katsotut leffat -listalta leffan muuttujien huolimatta
 	    public ResponseEntity<String> removeMovieFromOnWatchList(Long movieListId, Long movieId) {
 	    	Optional<OnWatchList> optionalOnWatchList = watchedListRepository.findById(movieListId);
 	    	if (optionalOnWatchList.isPresent()) {

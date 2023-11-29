@@ -1,6 +1,6 @@
 # Fetching a movie by its id
 
-**URL:** `/movie/{movieId}`
+**URL:** `movielists/movie/{movieId}`
 
 **Method:** `GET`
 

@@ -1,15 +1,11 @@
 package ohjelmointi2.BackEndFilmApp.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import jakarta.persistence.Id;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MovieDetailResponse {
 
-	@JsonProperty("genre")
-    private Genres[] genres;
+
     private Long id;
     private String overview;
     private String release_date;
@@ -21,12 +17,7 @@ public class MovieDetailResponse {
 	
     // getters and setters
     
-	public Genres[] getGenres() {
-		return genres;
-	}
-	public void setGenres(Genres[] genres) {
-		this.genres = genres;
-	}
+
 	public Long getId() {
 		return id;
 	}

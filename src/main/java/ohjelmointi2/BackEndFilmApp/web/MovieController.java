@@ -33,12 +33,6 @@ public class MovieController {
         return ResponseEntity.ok(nowPlayingMovies);
     }
     
-
-    @GetMapping("/genres")
-    public ResponseEntity<List<Genres>> getGenres() {
-        List<Genres> genres = tmdbService.getGenres(); // Create this method in TmdbService
-        return ResponseEntity.ok(genres);
-    }
     
     @GetMapping("/popular")
     public ResponseEntity<List<Movie>> getPopularMovies() {

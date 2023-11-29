@@ -1,6 +1,6 @@
 # Fetching popular movies
 
-**URL:** `/popular`
+**URL:** `/api/tmdb/popular`
 
 **Method:** `GET`
 

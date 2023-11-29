@@ -60,14 +60,27 @@ For this project we have decided to use the TMDB API. On our documentation we ha
 ### GET
 
 * [Now playing movies](EndpointDocs/GET/now-playing.md)
-* [Movie genres](EndpointDocs/GET/genres.md)
 * [Popular movies](EndpointDocs/GET/popular.md)
 * [Upcoming movies](EndpointDocs/GET/upcoming.md)
 * [Top rated movies](EndpointDocs/GET/toprated.md)
+* [Search movie](EndpointDocs/GET/searchmovie.md) 
 * [Movie by id](EndpointDocs/GET/moviebyid.md)
 * [All favorites lists](EndpointDocs/GET/allfavorites.md)
 * [All users](EndpointDocs/GET/allusers.md)
+* [User's movie lists](EndpointDocs/GET/userslists.md) 
 
+### POST
+
+* [User's registration](EndpointDocs/POST/register.md)
+* [User's sign in](EndpointDocs/POST/signin.md)
+* [Adding movie to favorites](EndpointDocs/POST/addfavorite.md)
+* [Adding movie to watchlist](EndpointDocs/POST/watchlist.md)
+* [Adding movie to watched list](EndpointDocs/POST/watchedmovies.md)
+
+### DELETE
+* [Delete movie from favorites](EndpointDocs/DELETE/deletefavorite.md)
+* [Delete movie from watchlist](EndpointDocs/DELETE/delfromwatchlist.md)
+* [Delete movie from watched list](EndpointDocs/DELETE/delfromwatched.md)
 
 # Mobile App
 The Front End side of this app you can find [here](https://github.com/Elokuva-Projekti-2023/MobileFilmProject)

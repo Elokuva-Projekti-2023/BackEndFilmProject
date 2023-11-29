@@ -1,6 +1,6 @@
 # Fetching now playing movies
 
-**URL:** `/now-playing`
+**URL:** `/api/tmdb/now-playing`
 
 **Method:** `GET`
 

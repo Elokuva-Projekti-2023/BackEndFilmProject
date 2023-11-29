@@ -1,6 +1,6 @@
 # Fetching top rated movies
 
-**URL:** `/toprated`
+**URL:** `/api/tmdb/toprated`
 
 **Method:** `GET`
 

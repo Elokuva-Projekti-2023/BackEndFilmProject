@@ -1,6 +1,6 @@
 # Fetching all users
 
-**URL:** `/allusers`
+**URL:** `movielists/allusers`
 
 **Method:** `GET`
 

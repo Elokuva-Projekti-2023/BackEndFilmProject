@@ -4,6 +4,8 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jws;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -36,9 +38,10 @@ public class TokenService {
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
     }
-
+    
     public Claims parseToken(String token) {
         return Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();
     }
+
 
 }

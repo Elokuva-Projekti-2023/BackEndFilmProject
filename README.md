@@ -24,23 +24,6 @@ The server uses database with the following schema
 | movie_description | varchar(500) |  |
 | movie_genre_ids   |  |  |
 
-
-## MovieList_User
-
-| Name              | Type          |  Relations  |
-| -------------     | ----------    |-------------|
-| movielist_id      | bigint        | PRIMARY KEY |
-| movielist_name    | VARCHAR(255)  |  |
-| user_id           | bigint        | FOREIGN KEY (`user_id`) REFERENCES `User` (`user_id`)     |
-
-## MovieList_Movie
-
-| Name         | Type          |  Relations  |
-| -------------| ----------    |-------------|
-| movielist_id | bigint        | FOREIGN KEY (`movielist_id`) REFERENCES `MovieList` (`movielist_id`) |
-| movie_id     | bigint        | FOREIGN KEY (`movie_id`) REFERENCES `Movie` (`movie_id`) |
-
-
 ## User
 
 | Name                  | Type            |  Relations  |
@@ -49,6 +32,58 @@ The server uses database with the following schema
 | user_name             | VARCHAR(255)    |             |
 | user_email            | VARCHAR(255)    |             |
 | user_password         | VARCHAR(255)    |             |
+
+## MovieDetailResponse
+
+| Name              | Type         |  Relations  |
+| ----------------- | ------------ |-------------|
+| id                | bigint       | PRIMARY KEY |
+| overview          | varchar(max) |             |
+| release_date      | varchar(20)  |             |
+| title             | varchar(100) |             |
+| poster_path       | varchar(255) |             |
+| original_title    | varchar(100) |             |
+| vote_average      | double       |             |
+| vote_count        | int          |             |
+
+## AboutToWatchList
+
+| Name                   | Type         |  Relations  |
+| ---------------------- | ------------ |-------------|
+| aboutToWatchListId     | bigint       | PRIMARY KEY |
+| user                   | User         | FOREIGN KEY |
+| movies                 | List<Movie>  |             |
+
+## FavoritesList
+
+| Name               | Type         |  Relations  |
+| ------------------ | ------------ |-------------|
+| favoritesListId    | bigint       | PRIMARY KEY |
+| user               | User         | FOREIGN KEY |
+| movies             | List<Movie>  |             |
+
+## OnWatchList
+
+| Name              | Type         |  Relations  |
+| ----------------- | ------------ |-------------|
+| onWatchListId     | bigint       | PRIMARY KEY |
+| user              | User         | FOREIGN KEY |
+| movies            | List<Movie>  |             |
+
+## UserMovieLists
+
+| Name              | Type             |  Relations         |
+| ----------------- | ---------------- |--------------------|
+| userMovieListsId  | bigint           | PRIMARY KEY        |
+| favoritesList     | FavoritesList    | FOREIGN KEY        |
+| aboutToWatchList  | AboutToWatchList | FOREIGN KEY        |
+| onWatchList       | OnWatchList      | FOREIGN KEY        |
+
+
+
+
+
+
 
 # API
 
@@ -83,4 +118,4 @@ For this project we have decided to use the TMDB API. On our documentation we ha
 * [Delete movie from watched list](EndpointDocs/DELETE/delfromwatched.md)
 
 # Mobile App
-The Front End side of this app you can find [here](https://github.com/Elokuva-Projekti-2023/MobileFilmProject)
+The Front End side of this app you can find [here](https://github.com/Elokuva-Projekti-2023/MobileProject)
